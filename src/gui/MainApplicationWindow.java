@@ -20,11 +20,7 @@ public class MainApplicationWindow {
     private User loggedInUser;
 
     public MainApplicationWindow(FilmPlatform filmPlatform, User loggedInUser) {
-        this.filmPlatform = FilmPlatform.loadStateFromFile();
-        if (filmPlatform == null) {
-            this.filmPlatform = new FilmPlatform();
-        }
-
+        this.filmPlatform = filmPlatform;
         this.loggedInUser = loggedInUser;
 
         frame = new JFrame("Film Platform - Main Window");
