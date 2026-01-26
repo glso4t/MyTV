@@ -94,7 +94,6 @@ public class FilmPlatform {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("filmPlatform.ser"))) {
             oos.writeObject(this);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

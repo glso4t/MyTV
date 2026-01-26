@@ -23,12 +23,8 @@ public class Subscriber extends User implements Serializable{
     public void rateMovie(Movie movie) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Rate backend.Movie: " + movie.getTitle());
-
-        System.out.print("Enter the text of the evaluation (up to 500 characters): ");
         String text = scanner.nextLine();
 
-        System.out.print("Enter the rating (1 to 5): ");
         int ratingValue = scanner.nextInt();
 
         if (validateRatingInput(text, ratingValue)) {
@@ -48,15 +44,12 @@ public class Subscriber extends User implements Serializable{
     public void editRating(Movie movie) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Edit backend.Rating for backend.Movie: " + movie.getTitle());
 
         Rating selectedRating = displayAndSelectRating(movie);
 
         if (selectedRating != null) {
-            System.out.print("Enter the new text of the evaluation (up to 500 characters): ");
             String newText = scanner.nextLine();
 
-            System.out.print("Enter the new rating (1 to 5): ");
             int newRatingValue = scanner.nextInt();
 
             if (validateRatingInput(newText, newRatingValue)) {
@@ -74,13 +67,11 @@ public class Subscriber extends User implements Serializable{
     }
 
     private Rating displayAndSelectRating(Movie movie) {
-        System.out.println("Select a backend.Rating to Edit:");
 
         List<Rating> movieRatings = movie.getRatings();
 
         for (int i = 0; i < movieRatings.size(); i++) {
             Rating rating = movieRatings.get(i);
-            System.out.println(i + 1 + ". Text: " + rating.getText() + " | backend.Rating: " + rating.getRating());
         }
 
         Scanner scanner = new Scanner(System.in);
@@ -134,7 +125,6 @@ public class Subscriber extends User implements Serializable{
     }
 
     public void viewFavorites() {
-        System.out.println("Favorites:");
         for (Movie movie : favorites) {
             System.out.println("Title: " + movie.getTitle() + " | Type: " + getType(movie));
         }

@@ -45,15 +45,6 @@ public class FilmDatabase {
     }
 
     public void displayMovies() {
-        List<Movie> movies = getMovies();
-        if (movies.isEmpty()) {
-            System.out.println("No movies available.");
-        } else {
-            System.out.println("Movies:");
-            for (Movie movie : movies) {
-                System.out.println(movie);
-            }
-        }
     }
 
     public void addSubscriber(Subscriber subscriber) {
@@ -74,25 +65,24 @@ public class FilmDatabase {
     }
 
 // αποθηκεύει τους συνδρομητές σε ένα αρχείο με το όνομα "subscribers.ser"
-    public void saveSubscribersToFile() {
+    public boolean saveSubscribersToFile() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("subscribers.ser"))) {
             oos.writeObject(subscribers);
-            System.out.println("Subscribers saved to file.");
+            return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            return false;
         }
     }
 
-    public void loadSubscribersFromFile() {
+    public boolean loadSubscribersFromFile() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("subscribers.ser"))) {
-            subscribers = new ArrayList<>();
-
             subscribers = (List<Subscriber>) ois.readObject();
-            System.out.println("Subscribers loaded from file.");
+            return true;
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            return false;
         }
     }
+
 
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
@@ -105,22 +95,21 @@ public class FilmDatabase {
     public void addSeries(Series series) {
         movies.add(series);
     }
-
-    public void saveMoviesToFile() {
+    public boolean saveMoviesToFile() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
             oos.writeObject(movies);
-            System.out.println("Movies saved to file successfully!");
+            return true;
         } catch (IOException e) {
-            System.out.println("Error saving movies to file: " + e.getMessage());
+            return false;
         }
     }
 
-    public void loadMoviesFromFile() {
+public boolean loadMoviesFromFile() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             movies = (List<Movie>) ois.readObject();
-            System.out.println("Movies loaded from file successfully!");
+            return true;
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading movies from file: " + e.getMessage());
+            return false;
         }
     }
 }
