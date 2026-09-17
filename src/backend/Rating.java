@@ -1,8 +1,9 @@
 package backend;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Rating {
+public class Rating implements Serializable {
     private String text;
     private int rating;
     private Date date;

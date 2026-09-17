@@ -157,11 +157,10 @@ public class MainApplicationWindow {
     }
 
     public void saveDataOnExit() {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            if (filmPlatform != null && filmPlatform.getFilmDatabase() != null) {
-                filmPlatform.getFilmDatabase().saveSubscribersToFile();
-            }
-        }));
+        if (filmPlatform != null) {
+            filmPlatform.saveData();
+            filmPlatform.saveStateToFile();
+        }
     }
 
 }

@@ -18,7 +18,6 @@ public class Subscriber extends User implements Serializable{
         this.filmDatabase = filmDatabase;
         this.ratings = new ArrayList<>();
         this.favorites = new ArrayList<>();
-        filmDatabase.addSubscriber(this);
     }
     public void rateMovie(Movie movie) {
         Scanner scanner = new Scanner(System.in);
@@ -113,14 +112,16 @@ public class Subscriber extends User implements Serializable{
         favorites.add(movie);
         System.out.println("backend.Movie added to favorites successfully!");
     }
-    public void removeFromFavorites(Movie movie, FilmDatabase filmDatabase) {
+    // removes the movie from subscriber's favorites
+    public void removeFromFavorites(Movie movie) {
         favorites.remove(movie);
         System.out.println("backend.Movie removed from favorites successfully!");
+    }
 
+    // removes the movie from every subscriber's favorites when the movie gets deleted from the whole platform
+    public static void removeFromEveryonesFavorites(Movie movie, FilmDatabase filmDatabase) {
         for (Subscriber subscriber : filmDatabase.getAllSubscribers()) {
-            if (subscriber != this) {
-                subscriber.removeFromFavorites(movie, filmDatabase);
-            }
+            subscriber.removeFromFavorites(movie);
         }
     }
 

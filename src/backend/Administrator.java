@@ -44,9 +44,7 @@ public class Administrator extends User {
         filmDatabase.saveMoviesToFile();
         System.out.println("backend.Movie deleted successfully!");
 
-        for (Subscriber subscriber : filmDatabase.getAllSubscribers()) {
-            subscriber.removeFromFavorites(movie, filmDatabase);
-        }
+        Subscriber.removeFromEveryonesFavorites(movie, filmDatabase);
     }
 
     public void editMovie() {

@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmPlatform {
+public class FilmPlatform implements Serializable {
     private List<Administrator> administrators;
     private List<Subscriber> subscribers;
 
@@ -18,16 +18,16 @@ public class FilmPlatform {
             this.administrators = loadedPlatform.administrators;
             this.subscribers = loadedPlatform.subscribers;
             this.filmDatabase = loadedPlatform.filmDatabase;
+            this.filmDatabase.setFilmPlatform(this);
         } else {
             // if not loaded, create a new instance
             this.administrators = new ArrayList<>();
             this.subscribers = new ArrayList<>();
             this.filmDatabase = new FilmDatabase(new ArrayList<>(), "movies.ser", this);
             //initialization logic
-            filmDatabase.loadSubscribersFromFile();
             filmDatabase.loadMoviesFromFile();
-            saveDataOnExit();
         }
+        saveDataOnExit();
     }
 
     public User login(String username, String password) {
@@ -51,7 +51,6 @@ public class FilmPlatform {
             if (user instanceof Administrator) {
                 administrators.add((Administrator) user);
             } else if (user instanceof Subscriber) {
-                subscribers.add((Subscriber) user);
                 subscribers.add((Subscriber) user);
             }
             return true;
@@ -78,7 +77,7 @@ public class FilmPlatform {
     public void saveDataOnExit() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             saveData();
-            filmDatabase.saveSubscribersToFile();
+            saveStateToFile();
         }));
     }
 

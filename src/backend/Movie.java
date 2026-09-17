@@ -1,8 +1,11 @@
 package backend;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Movie {
+public class Movie implements Serializable {
+    private static int nextId = 1;
+
     private String title;
     private String description;
     private String genre;
@@ -21,7 +24,6 @@ public class Movie {
                  int duration, String category, String protagonists, List<Movie> relatedMovies)  {
         this.title = title;
         this.description = description;
-        this.genre = genre;
         this.appropriateForMinors = appropriateForMinors;
         this.yearOfFirstDisplay = yearOfFirstDisplay;
         this.duration = duration;
@@ -29,8 +31,7 @@ public class Movie {
         this.protagonists = protagonists;
         this.relatedMovies = relatedMovies;
         this.ratings = new ArrayList<>();
-        this.minOverallGrade = minOverallGrade;
-
+        this.id = nextId++;
     }
 
     public String getTitle() {
@@ -177,7 +178,7 @@ public class Movie {
                     System.out.println("Added to Favorites!");
                     break;
                 case 3:
-                    ((Subscriber) user).removeFromFavorites(this, filmPlatform.getFilmDatabase());
+                    ((Subscriber) user).removeFromFavorites(this);
                     System.out.println("Removed from Favorites!");
                     break;
                 default:
@@ -205,12 +206,7 @@ public class Movie {
 
 }
 
-
-
-
-
-
-class Season {
+class Season implements Serializable {
     private int number;
     private int yearOfProjection;
     private List<Episode> episodeList;
@@ -246,7 +242,7 @@ class Season {
     }
 }
 
-class Episode {
+class Episode implements Serializable {
     private int duration;
 
     public Episode(int duration) {

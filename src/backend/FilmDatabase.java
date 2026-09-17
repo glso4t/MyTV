@@ -7,19 +7,22 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmDatabase {
+public class FilmDatabase implements Serializable {
     private List<Movie> movies;
     private String filePath;
     private FilmPlatform filmPlatform;
-    private List<Subscriber> subscribers;
-    private List<Administrator>administrators;
+    private List<Administrator> administrators;
 
     //constructor
     public FilmDatabase(List<Movie> movies, String filePath, FilmPlatform filmPlatform) {
         this.movies = movies;
         this.filePath = filePath;
         this.filmPlatform = filmPlatform;
-        this.subscribers = new ArrayList<>();
+        this.administrators = new ArrayList<>();
+    }
+
+    public void setFilmPlatform(FilmPlatform filmPlatform) {
+        this.filmPlatform = filmPlatform;
     }
 
     public List<Movie> getMovies() {
@@ -47,9 +50,6 @@ public class FilmDatabase {
     public void displayMovies() {
     }
 
-    public void addSubscriber(Subscriber subscriber) {
-        subscribers.add(subscriber);
-    }
     public void addAdministrator(Administrator administrator) {
         administrators.add(administrator);
     }
@@ -63,26 +63,6 @@ public class FilmDatabase {
         }
         return allSubscribers;
     }
-
-// αποθηκεύει τους συνδρομητές σε ένα αρχείο με το όνομα "subscribers.ser"
-    public boolean saveSubscribersToFile() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("subscribers.ser"))) {
-            oos.writeObject(subscribers);
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    }
-
-    public boolean loadSubscribersFromFile() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("subscribers.ser"))) {
-            subscribers = (List<Subscriber>) ois.readObject();
-            return true;
-        } catch (IOException | ClassNotFoundException e) {
-            return false;
-        }
-    }
-
 
     public void setMovies(List<Movie> movies) {
         this.movies = movies;

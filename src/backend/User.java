@@ -1,6 +1,8 @@
 package backend;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String username;
     private String password;
     private String name;
@@ -37,4 +39,3 @@ public class User {
         return this.password.equals(password);
     }
 }
-
