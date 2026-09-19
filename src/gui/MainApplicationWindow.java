@@ -118,12 +118,18 @@ public class MainApplicationWindow {
                 String name = nameField.getText();
                 String category = categoryField.getText();
 
+                // ΔΙΟΡΘΩΣΗ: πριν, το Integer.parseInt("") έσκαγε NumberFormatException κάθε φορά
+                // που το πεδίο "Minimum Review Rating" έμενε κενό, μπλοκάροντας ΟΛΗ την αναζήτηση
+                // ακόμα κι αν είχες συμπληρώσει μόνο τίτλο. Τώρα κενό πεδίο = χωρίς φίλτρο βαθμολογίας.
                 int reviewNum = 0;
-                try {
-                    reviewNum = Integer.parseInt(reviewNumField.getText());
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(searchFrame, "Please enter a valid number for review rating.");
-                    return;
+                String reviewNumText = reviewNumField.getText().trim();
+                if (!reviewNumText.isEmpty()) {
+                    try {
+                        reviewNum = Integer.parseInt(reviewNumText);
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(searchFrame, "Please enter a valid number for review rating.");
+                        return;
+                    }
                 }
 
                 String searchResult = FilmSearch.findMovieOrSeries(title, type, name, true, category, reviewNum, filmPlatform.getFilmDatabase());
